@@ -392,7 +392,7 @@ window.onload = function () {
         //infoWrapper.style.display = "block";
         startTitle.style.display = "block";
         setTimeout(() => {
-            window.location.href = 'game_level.html';
+            window.location.href = '../game_level.html';
         }, 5000);
 
     }
