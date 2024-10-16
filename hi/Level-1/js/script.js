@@ -111,7 +111,7 @@ window.onload = function () {
 
     function getRandomName(type) {
         const names = {
-            fish: ['Bubbles', 'Finny', 'Swimmy', 'Splashy'],
+            fish: ["आरव", "रोहन", "विक्रम", "आदित्य"],
             rareFish: ['Sparkle', 'Glimmer', 'Treasure', 'Shimmer'],
             jellyfish: ['Jelly', 'Wobble', 'Floaty', 'Bouncy'],
             shark: ['Jaws', 'Finn', 'Chomper', 'Sharky'],
@@ -210,7 +210,7 @@ function startGame() {
     trashSound = new sound('sfx/trash.mp3');
     bzzt = new sound('sfx/bzzt.mp3');
     bite = new sound('sfx/bite.mp3');
-    bgm = new sound('sfx/Phishing Game Audio English.mp3');
+    bgm = new sound('sfx/Phishing Game Audio Hindi.mp3');
     bgm.play();
     if (day === 0) {
         fishTracker = [0, 0, 0, 0, 0];
