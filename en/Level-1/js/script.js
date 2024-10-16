@@ -84,7 +84,7 @@ window.onload = function () {
 
     function getRandomName(type) {
         const names = {
-            fish: ['Bubbles', 'Finny', 'Swimmy', 'Splashy'],
+            fish: ["Aarav", "Ethan", "Liam", "Noah"],
             rareFish: ['Sparkle', 'Glimmer', 'Treasure', 'Shimmer'],
             jellyfish: ['Jelly', 'Wobble', 'Floaty', 'Bouncy'],
             shark: ['Jaws', 'Finn', 'Chomper', 'Sharky'],
