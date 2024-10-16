@@ -1,0 +1,152 @@
+body {
+    background-color: black;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    flex-direction: column; /* Allow for vertical stacking */
+}
+#investigation-container {
+    width: 100%; /* Use full width */
+    max-width: 800px; /* Increase max width */
+    padding: 40px; /* Increase padding for a more spacious look */
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    margin: 20px auto; /* Centered with margin */
+}
+
+.container {
+    text-align: center;
+    color: white;
+    z-index: 2;
+    position: relative;
+    padding: 30px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 400px;
+}
+
+h1 {
+    margin-bottom: 20px;
+    position: absolute; /* Use absolute positioning */
+    top: 5%; /* Position at the top */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust for centering */
+    color: rgb(255, 255, 255);
+    font-weight: bolder;
+    white-space: nowrap; /* Prevent line breaks */
+}
+
+#greeting {
+    white-space: nowrap; /* Prevent line breaks */
+}
+
+.form-control,
+.btn {
+    border-radius: 30px;
+    margin-bottom: 10px;
+}
+
+button {
+    background-color: rgb(34, 43, 122);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+#gradientCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+}
+
+@media (max-width: 576px) {
+    h1 {
+        font-size: 1.5rem; /* Adjust font size for small screens */
+    }
+
+    .container {
+        padding: 20px; /* Reduce padding on small screens */
+    }
+}
+.container {
+    margin-top: 20px;
+}
+
+.table {
+    border: 2px dashed #888;
+    padding: 20px;
+    text-align: center;
+    margin: 20px auto;
+}
+.lottie-animation {
+    margin-right: 5px; /* Add space between the animation and text */
+}
+.points-container {
+    max-width: 600px; /* Adjust the max width as needed */
+    margin: 0 auto;   /* Center the container */
+}
+
+.draggable {
+    background-color: #0026ff;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px auto;
+    cursor: move;
+    border-radius: 5px;
+    width: fit-content; /* Makes it easier to drag */
+}
+
+.url-part {
+    display: block;
+    
+    color: white;
+    padding: 10px 20px;
+    margin: 10px auto;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.url-part:hover {
+    background-color: #0026ff;
+}
+
+.hidden {
+    display: none;
+}
+
+@media (max-width: 576px) {
+    .url-part {
+        width: 80%;
+    }
+
+    .draggable {
+        width: fit-content; /* Adjust width for mobile */
+    }
+}

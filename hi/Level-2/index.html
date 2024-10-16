@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
+
+    <link rel="stylesheet" href="styles.css" />
+    <title>URL Investigation Game</title>
+</head>
+
+<body>
+    <canvas id="gradientCanvas"></canvas>
+    <button class="btn btn-secondary mt-3" style="width: auto;position: relative; z-index: 10;" onclick="goToGame()">Back</button>
+    <div id="investigation-container" class="container text-center">
+        <h2>URL की जांच करें</h2>
+        <div id="draggable-url" class="draggable" draggable="true" ondragstart="drag(event)">https://scholarship.com</div>
+        <div id="investigation-table" class="table" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <p style="color: aliceblue;">URL को जांच के लिए यहाँ लाएँ</p>
+        </div>
+        <button id="investigate-button" class="btn btn-primary mt-3 hidden" onclick="showUrlParts()">जांच करें</button>
+        <div id="url-parts-container" class="hidden mt-4">
+            <div class="url-part" id="https-part" onclick="showModal('https://')">https://</div>
+            <div class="url-part" id="domain-part" onclick="showModal('scholarship')">scholarship</div>
+            <div class="url-part" id="tld-part" onclick="showModal('.com')">.com</div>
+        </div>
+    </div>
+    
+    <div class="container text-center">
+        <h4>मुख्य बिंदु:</h4>
+        <div class="points-container mx-auto">
+            <ul class="list-group">
+                <li class="">
+                    <div id="https-animation" class="lottie-animation" style="width: 40px; height: 40px; display: inline-block; vertical-align: middle;"></div>
+                    <span>https://</span><span>  </span> <span>http://</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="red" class="svg-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </li>
+                <li class="">
+                    अगर आपको लिंक के बारे में संदेह है, तो इसे न दबाएँ।
+                </li>
+                <li>
+                    आप लिंक का पूरा पता देखें, उसमें परिचित वेबसाइटों के नाम या डोमेन हैं, यह सुनिश्चित करें।
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+    
+
+
+    <!-- Modal for showing the URL part explanation -->
+    <div class="modal fade" id="urlModal" tabindex="-1" role="dialog" aria-labelledby="urlModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="urlModalLabel">URL Investigation Explanation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modal-body-content">
+                    <!-- URL part explanation will be injected here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <audio id="modal-audio" preload="auto"></audio>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

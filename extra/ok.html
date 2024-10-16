@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Cyber Candy Clash</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        body {
+            position: relative;
+            overflow: hidden;
+            height: 100vh; /* Ensure full height for centering */
+            display: flex;
+            align-items: center; /* Center vertically */
+            justify-content: center; /* Center horizontally */
+            background-color: rgba(0, 0, 0, 0.5); /* Optional: dark overlay */
+        }
+        
+        .container {
+            position: relative;
+            z-index: 1; /* Bring content above the video */
+            color: rgb(51, 255, 0);
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px; /* Rounded corners for the container */
+            background: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
+            backdrop-filter: blur(10px); /* Apply blur for glassmorphism */
+            border: 1px solid rgba(255, 255, 255, 0.2); /* Light border */
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+            width: 90%; /* Responsive width */
+            max-width: 400px; /* Maximum width */
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        .form-control, .btn {
+            border-radius: 30px;
+            
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop playsinline>
+        <source src="/static/videoplayback.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <h1 style="position: absolute; align-self: self-start; align-items: center; color:rgb(51, 255, 0) ; margin-top: 5%; font-weight: bolder;">Welcome to Cyber Sva Raksha Game</h1>
+
+    <div class="container">
+        <h1 id="greeting"></h1>
+        <form id="start-form">
+            <div class="form-group">
+                <input type="text" class="form-control" id="player-name" placeholder="Enter your name" style="align-self: centers;" required>
+            </div>
+            <div class="form-group">
+                <select class="form-control" id="language">
+                    <option value="en">English</option>
+                    <option value="hi">हिंदी</option>
+                    <option value="kn">ಕನ್ನಡ</option>
+                    <option value="te">తెలుగు</option>
+                    <option value="ta">தமிழ்</option>
+                </select>
+            </div>
+            <button type="button" class="btn btn-primary btn-block" style="background-color: rgb(51, 255, 0);" id="start-button">Start</button>
+        </form>
+    </div>
+
+    <script>
+        const greetings = {
+            en: "Hello {name}, welcome to the game!",
+            hi: "नमस्ते {name}, खेल में आपका स्वागत है!",
+            kn: "ನಮಸ್ಕಾರ {name}, ಆಟಕ್ಕೆ ಸ್ವಾಗತ!",
+            te: "హలో {name}, ఆటకు స్వాగతం!",
+            ta: "வணக்கம் {name}, விளையாட்டிற்கு வரவேற்கிறோம்!"
+        };
+
+        document.getElementById('start-button').addEventListener('click', function() {
+            const name = document.getElementById('player-name').value.trim();
+            const language = document.getElementById('language').value;
+
+            if (name) {
+                greetPlayer(name, language);
+            } else {
+                alert("Please enter your name.");
+            }
+        });
+
+        function greetPlayer(name, language) {
+            const greetingText = greetings[language].replace("{name}", name);
+            document.getElementById('greeting').textContent = greetingText;
+            speak(greetingText, language);
+
+            // Wait for the greeting to finish, then redirect
+            setTimeout(function() {
+                window.location.href = `/${language}/game_level.html`; // Redirect to language-specific folder
+            }, 3000);
+        }
+
+        function speak(text, language) {
+            const synth = window.speechSynthesis;
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = language;
+
+            utterance.onend = function() {
+                console.log('Speech has finished.');
+            };
+            utterance.onerror = function(e) {
+                console.error('Speech synthesis error: ' + e.error);
+            };
+            synth.speak(utterance);
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Game Tutorial</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .content {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .tutorial-box {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            max-width: 250px;
+            display: none; /* Hidden by default */
+            z-index: 1000; /* Ensure it’s above other content */
+        }
+        .tutorial-box h2 {
+            margin: 0 0 10px;
+        }
+        .tutorial-box p {
+            margin: 5px 0;
+        }
+        .button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content">
+        <h1>Welcome to the Game!</h1>
+        <p id="game-description" style="display: none;">In this game, you'll explore exciting levels, defeat enemies, and collect treasures. Make sure to pay attention to the instructions below to maximize your experience!</p>
+        <p id="link-description" style="display: none;">Ready to get started? Click the link below!</p>
+        <a href="https://example.com" id="start-link" style="display: none;" class="button">Start Game</a>
+    </div>
+
+    <div class="tutorial-box" id="tutorial-box">
+        <h2>How to Play</h2>
+        <p id="tutorial-text"></p>
+        <button id="next-button" class="button">Next</button>
+    </div>
+
+    <script>
+        const tutorialBox = document.getElementById('tutorial-box');
+        const tutorialText = document.getElementById('tutorial-text');
+        const nextButton = document.getElementById('next-button');
+        const gameDescription = document.getElementById('game-description');
+        const linkDescription = document.getElementById('link-description');
+        const startLink = document.getElementById('start-link');
+
+        let step = 0;
+
+        function showTutorial() {
+            tutorialBox.style.display = 'block';
+            updateTutorial();
+        }
+
+        function updateTutorial() {
+            if (step === 0) {
+                tutorialText.innerText = "Welcome to the game! Click 'Next' to continue.";
+            } else if (step === 1) {
+                gameDescription.style.display = 'block';
+                tutorialText.innerText = "Now you know the game details. Click 'Next' to see how to start.";
+            } else if (step === 2) {
+                linkDescription.style.display = 'block';
+                startLink.style.display = 'inline-block';
+                tutorialText.innerText = "Ready to get started? Click the link below!";
+            } else {
+                tutorialBox.style.display = 'none';
+            }
+            step++;
+        }
+
+        nextButton.addEventListener('click', updateTutorial);
+
+        // Start the tutorial when the page loads
+        window.onload = showTutorial;
+    </script>
+
+</body>
+</html>
