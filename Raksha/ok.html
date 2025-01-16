@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNS Lookup Tool</title>
+    <!-- Bootstrap CSS (via CDN) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABDo2jDFA5hZ6rEZt9+0JZL/j+OXp2tR1zlt9q4l9yZSkZQb1u7Ksfq" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f1f5f9;
+            padding-top: 50px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            max-width: 900px;
+            padding: 20px;
+        }
+
+        .card {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            font-size: 20px;
+            color: #007bff;
+        }
+
+        .dns-record {
+            margin-bottom: 20px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+            padding: 15px;
+            background-color: #f8d7da;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        h1 {
+            color: #343a40;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            font-size: 1.1rem;
+            padding: 12px;
+        }
+
+        .form-label {
+            font-weight: 500;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #343a40;
+            color: white;
+            margin-top: 50px;
+        }
+
+        .footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="text-center mb-4">DNS Lookup Tool</h1>
+
+                <!-- Domain Input Form -->
+                <div class="mb-3">
+                    <label for="domain" class="form-label">Enter Domain Name</label>
+                    <input type="text" id="domain" class="form-control" placeholder="e.g., google.com"
+                        aria-label="Enter domain name">
+                </div>
+
+                <button onclick="performLookup()" class="btn btn-primary w-100">Lookup DNS Records</button>
+
+                <!-- Loading Spinner -->
+                <div id="loading" class="loading">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+
+                <!-- Results Container -->
+                <div id="dns-results" class="mt-4"></div>
+
+                <!-- Error message container (if any) -->
+                <div id="error-message" class="error" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Powered by <a href="https://www.whoisxmlapi.com/" target="_blank">WhoisXML API</a></p>
+    </div>
+
+    <!-- Bootstrap JS (via CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b7xFb3b5tT4E7OR62aHZ22pe/vJlqkjCwDUSUlO2+8w/9XJptIM6rQeLKxjK52j1" crossorigin="anonymous"></script>
+
+    <script>
+        function performLookup() {
+            const domain = document.getElementById('domain').value;
+            const loadingElement = document.getElementById('loading');
+            const resultsContainer = document.getElementById('dns-results');
+            const errorMessage = document.getElementById('error-message');
+
+            // Reset the results and error message
+            resultsContainer.innerHTML = '';
+            errorMessage.style.display = 'none';
+
+            // Validate input
+            if (!domain) {
+                errorMessage.style.display = 'block';
+                errorMessage.textContent = "Please enter a domain.";
+                return;
+            }
+
+            // Show loading spinner
+            loadingElement.style.display = 'block';
+
+            // Make the API request
+            const url = `https://www.whoisxmlapi.com/whoisserver/DNSService?apiKey=at_zBTo7kguf8QBEcZqBahVk0PiFBbk7&domainName=${domain}&type=_all&outputFormat=XML`;
+
+            fetch(url)
+                .then(response => response.text()) // Get response as text (XML)
+                .then(data => {
+                    loadingElement.style.display = 'none';  // Hide loading spinner
+
+                    // Parse the XML response
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(data, "application/xml");
+
+                    // Check if the response contains DNS records
+                    const dnsRecords = xmlDoc.getElementsByTagName('dnsRecords')[0];
+
+                    if (dnsRecords && dnsRecords.children.length > 0) {
+                        let recordsHTML = '';
+
+                        // Loop through each DNS record and extract relevant information
+                        Array.from(dnsRecords.children).forEach(record => {
+                            let recordHTML = '<div class="dns-record">';
+
+                            // Extract record type
+                            const dnsType = record.nodeName;
+                            recordHTML += `<h5><strong>Record Type: ${dnsType}</strong></h5>`;
+
+                            // Extract raw text (like TXT, A, MX, etc.)
+                            const rawText = record.getElementsByTagName('rawText')[0]?.textContent || 'No raw data available';
+                            recordHTML += `<pre>${rawText}</pre>`;
+
+                            // Handle specific record data based on type
+                            if (dnsType === 'TXTRecord') {
+                                const strings = Array.from(record.getElementsByTagName('string')).map(s => s.textContent).join('<br>');
+                                recordHTML += `<strong>Strings:</strong><br>${strings}<br>`;
+                            }
+
+                            if (dnsType === 'ARecord') {
+                                const address = record.getElementsByTagName('address')[0]?.textContent || 'No address found';
+                                recordHTML += `<strong>Address:</strong> ${address}<br>`;
+                            }
+
+                            if (dnsType === 'NSRecord') {
+                                const target = record.getElementsByTagName('target')[0]?.textContent || 'No target found';
+                                recordHTML += `<strong>Target:</strong> ${target}<br>`;
+                            }
+
+                            if (dnsType === 'MXRecord') {
+                                const priority = record.getElementsByTagName('priority')[0]?.textContent || 'No priority found';
+                                const target = record.getElementsByTagName('target')[0]?.textContent || 'No target found';
+                                recordHTML += `<strong>Priority:</strong> ${priority}<br><strong>Target:</strong> ${target}<br>`;
+                            }
+
+                            recordHTML += '</div>';
+                            recordsHTML += recordHTML;
+                        });
+
+                        resultsContainer.innerHTML = recordsHTML;
+                    } else {
+                        resultsContainer.innerHTML = '<div class="error">No DNS records found or invalid domain.</div>';
+                    }
+                })
+                .catch(error => {
+                    loadingElement.style.display = 'none';  // Hide loading spinner
+                    errorMessage.style.display = 'block';
+                    errorMessage.textContent = `Error: ${error.message}`;
+                });
+        }
+    </script>
+
+</body>
+
+</html>

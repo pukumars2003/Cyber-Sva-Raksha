@@ -14,74 +14,74 @@
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 	<style>
-		/* Tutorial Box */
-		#tutorial-box {
-			position: absolute;
-			width: 80%;
-			/* Responsive width */
-			max-width: 600px;
-			/* Maximum width */
-			background-color: rgba(0, 0, 0, 0.8);
-			/* Semi-transparent background */
-			color: white;
+		.tutorial-box {
+			position: fixed;
+			/* Keep it within the viewport */
+			background-color: rgb(255, 255, 255);
+			color: rgb(0, 0, 0);
+			padding: 15px;
 			border-radius: 8px;
-			padding: 20px;
-			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+			max-width: 90%;
+			/* Responsive max width */
+			width: auto;
+			/* Allow width to adjust */
+			display: none;
+			/* Hidden by default */
 			z-index: 1000;
-			/* Ensure it's above other content */
-			transition: transform 0.3s ease;
-			/* Smooth transition */
+			/* Ensure it's on top */
+			text-align: center;
+			left: 60%;
+			/* Center the box horizontally */
+			top: 20vh;
+			/* Use vh for vertical positioning */
+			transform: translate(-50%, 0);
+			/* Adjust for horizontal centering */
 		}
 
-		/* Button */
-		#next-button {
+		/* Styles for smaller screens */
+		@media (max-width: 768px) {
+			.tutorial-box {
+				top: 50vh;
+				/* Adjust for tablets */
+				padding: 10px;
+				width: auto;
+				/* Allow width to adjust */
+				display: none;
+				/* Hidden by default */
+				
+				/* Ensure it's on top */
+				text-align: center;
+				left: 90%;
+				/* Center the box horizontally */
+				top: 20vh;
+				/* Use vh for vertical positioning */
+				transform: translate(-50%, 0);
+				/* Reduce padding */
+			}
+		}
+
+		@media (max-width: 480px) {
+			.tutorial-box {
+				top: 10vh;
+				/* Adjust for mobile */
+				padding: 8px;
+				/* Further reduce padding */
+				max-width: 95%;
+				/* Allow more width */
+			}
+		}
+
+		.button {
+			display: inline-block;
+			margin-top: 10px;
+			padding: 10px 15px;
 			background-color: #007bff;
-			/* Button color */
 			color: white;
-			/* Text color */
-			border: none;
+			text-decoration: none;
 			border-radius: 5px;
-			padding: 10px 20px;
-			font-size: 16px;
-			/* Font size */
 			cursor: pointer;
-			transition: background-color 0.3s ease;
-			/* Smooth background transition */
 		}
-
-		/* Button hover effect */
-		#next-button:hover {
-			background-color: #0056b3;
-			/* Darker blue on hover */
-		}
-
-		/* Responsive adjustments */
-		@media (max-width: 600px) {
-			#tutorial-box {
-				width: 90%;
-				/* Make it a bit wider on mobile */
-				padding: 15px;
-				/* Adjust padding */
-			}
-
-			#next-button {
-				width: 100%;
-				/* Full width button on mobile */
-				font-size: 18px;
-				/* Increase font size */
-			}
-		}
-
-		/* Ensuring the tutorial box stays within the viewport */
-		@media (max-height: 600px) {
-			#tutorial-box {
-				max-height: 80%;
-				/* Prevent it from going off the screen */
-				overflow-y: auto;
-				/* Allow scrolling if content overflows */
-			}
-		}
-
 
 		.highlight {
 			border: 2px solid yellow;
@@ -156,7 +156,7 @@
 	<div class="tutorial-box" id="tutorial-box">
 		<h2>How to Play</h2>
 		<p id="tutorial-text"></p>
-		<button id="next-button" class="button next-button">Next</button>
+		<button id="next-button" class="button">Next</button>
 	</div>
 
 	<audio id="tutorial-audio" style="display:none;"></audio>
@@ -224,27 +224,18 @@
 			const rect = element.getBoundingClientRect();
 			const tutorialBoxHeight = tutorialBox.offsetHeight;
 
-			const isMobile = window.innerWidth <= 600; // Check if the screen is mobile
+			// Calculate the top position, ensuring it doesn't go off the screen
+			let topPosition = rect.top - tutorialBoxHeight - 10; // Above the highlighted element
+			if (topPosition < 0) {
+				topPosition = rect.bottom + 10; // Below the element if it goes off-screen
+			}
 
-			if (isMobile) {
-				// Center the tutorial box on mobile
-				tutorialBox.style.top = '50%';
-				tutorialBox.style.left = '50%';
-				tutorialBox.style.transform = 'translate(-50%, -50%)'; // Center the box
-			} else {
-				// Calculate the top position for desktop
-				let topPosition = rect.top - tutorialBoxHeight - 10; // Above the highlighted element
-				if (topPosition < 0) {
-					topPosition = rect.bottom + 10; // Below the element if it goes off-screen
-				}
+			tutorialBox.style.top = topPosition + 'px';
+			tutorialBox.style.left = (rect.left + (element.offsetWidth / 2) - (tutorialBox.offsetWidth / 2)) + 'px';
 
-				tutorialBox.style.top = topPosition + 'px';
-				tutorialBox.style.left = (rect.left + (element.offsetWidth / 2) - (tutorialBox.offsetWidth / 2)) + 'px';
-
-				// Check if the box goes off the right side of the viewport
-				if (parseInt(tutorialBox.style.left) + tutorialBox.offsetWidth > window.innerWidth) {
-					tutorialBox.style.left = (window.innerWidth - tutorialBox.offsetWidth - 10) + 'px'; // Align it to the right
-				}
+			// Check if the box goes off the right side of the viewport
+			if (parseInt(tutorialBox.style.left) + tutorialBox.offsetWidth > window.innerWidth) {
+				tutorialBox.style.left = (window.innerWidth - tutorialBox.offsetWidth - 10) + 'px'; // Align it to the right
 			}
 		}
 
@@ -273,7 +264,6 @@
 
 		// Start the tutorial when the page loads
 		window.onload = showTutorial;
-
 	</script>
 </body>
 

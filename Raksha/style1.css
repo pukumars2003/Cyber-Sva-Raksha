@@ -1,0 +1,53 @@
+/* style1.css */
+
+/* Reset default margins and paddings */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom right, #2c3e50, #4ca1af); /* Example gradient background */
+}
+
+#game-container {
+  flex: 3;
+  position: relative;
+  background-image: url('background.jpg'); /* Optional: Replace with your background image */
+  background-size: cover;
+  background-position: center;
+}
+
+#gameCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#info-panel {
+  flex: 1;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-left: 2px solid #ccc;
+}
+
+#info-panel h3 {
+  margin-bottom: 10px;
+}
+
+#info-panel p {
+  margin: 10px 0;
+}
+
+#info-panel button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 16px;
+  cursor: pointer;
+}

@@ -111,7 +111,7 @@ window.onload = function () {
 
     function getRandomName(type) {
         const names = {
-            fish: ["आरव", "रोहन", "विक्रम", "आदित्य"],
+            fish: ['Bubbles', 'Finny', 'Swimmy', 'Splashy'],
             rareFish: ['Sparkle', 'Glimmer', 'Treasure', 'Shimmer'],
             jellyfish: ['Jelly', 'Wobble', 'Floaty', 'Bouncy'],
             shark: ['Jaws', 'Finn', 'Chomper', 'Sharky'],

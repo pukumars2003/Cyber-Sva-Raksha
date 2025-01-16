@@ -12,7 +12,7 @@
     <title>URL Investigation Game</title>
 </head>
 
-<body onclick="startAudioSequence()">
+<body >
     <canvas id="gradientCanvas"></canvas>
     <button class="btn btn-secondary mt-3" style="width: auto;position: relative; z-index: 10;"
         onclick="goToGame()">Back</button>
@@ -48,7 +48,7 @@
                     </svg>
                 </li>
                 
-                <audio id="audio1" src="audio/Investigate.mp3" preload="auto"></audio>
+                
                 <li>
                     <span>Look for a lock icon in the address bar.</span>
                 </li>
@@ -87,6 +87,7 @@
     <div class="text-center mt-3">
         <button class="btn btn-secondary" onclick="goBack()">Back</button>
     </div>
+    <audio id="audio1" src="audio/Investigate.mp3" preload="auto"></audio>
     <audio id="modal-audio" preload="auto"></audio>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

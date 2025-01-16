@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cipherbreaker Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            text-align: center;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        #score {
+            font-size: 20px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        #timer {
+            font-size: 24px;
+            color: #e74c3c;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        #messageContainer {
+            margin: 20px 0;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 300px; /* Fixed width for input */
+            text-align: center; /* Center text in input */
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px; /* Space above the button */
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Background Animation */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff6f61, #6a5acd, #00bfff, #ff69b4);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            z-index: -1; /* Behind other content */
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <h1>Cipherbreaker Game</h1>
+    <div id="score">Score: 0</div>
+    <div id="timer">Time Left: <span id="timeLeft">120</span> seconds</div>
+    <div id="messageContainer">
+        <label for="encryptedMessage">Encrypted Message:</label>
+        <div id="encryptedMessage" style="font-weight: bold; margin: 10px 0;"></div>
+        <div id="encryptionKey" style="font-weight: bold; margin: 10px 0;"></div>
+    </div>
+    <input type="text" id="decryptedInput" placeholder="Enter your decrypted message">
+    <button id="submitBtn">Submit</button>
+    <script>
+        const encryptedMessages = [
+            { text: "Khoor Zruog", answer: "Hello World", key: 3 },  // Shift 3
+            { text: "Wklv lv d whvw phvvdjh", answer: "This is a test message", key: 3 }, // Shift 3
+            { text: "Uifsf jt b tfdsfu nfttbhf", answer: "There is a secret message", key: 1 }, // Shift 1
+            { text: "Dopg", answer: "Bold", key: 1 }, // Shift 1
+            { text: "Sgd sgdv", answer: "The cave", key: 1 }, // Shift 1
+        ];
+
+        let score = 0;
+        let currentMessage;
+        let timerInterval;
+        let timeLeft = 120; // Set timer to 2 minutes (120 seconds)
+
+        function startGame() {
+            score = 0;
+            timeLeft = 120; // Reset timer
+            updateScore();
+            pickRandomMessage();
+            startTimer();
+        }
+
+        function pickRandomMessage() {
+            const randomIndex = Math.floor(Math.random() * encryptedMessages.length);
+            currentMessage = encryptedMessages[randomIndex];
+            document.getElementById("encryptedMessage").innerText = currentMessage.text;
+            document.getElementById("encryptionKey").innerText = `Encryption Key: ${currentMessage.key}`; // Display the encryption key
+            document.getElementById("decryptedInput").value = "";
+        }
+
+        function updateScore() {
+            document.getElementById("score").innerText = `Score: ${score}`;
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById("timeLeft").innerText = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    alert("Time's up! Game Over!");
+                    resetGame();
+                }
+            }, 1000);
+        }
+
+        document.getElementById("submitBtn").addEventListener("click", () => {
+            const userInput = document.getElementById("decryptedInput").value;
+
+            if (userInput.toLowerCase() === currentMessage.answer.toLowerCase()) {
+                score += 10;
+                alert("Correct! You've earned 10 points.");
+            } else {
+                score -= 5;
+                alert(`Incorrect! You've lost 5 points. The correct answer was: "${currentMessage.answer}"`);
+            }
+
+            updateScore();
+            pickRandomMessage();
+        });
+
+        function resetGame() {
+            clearInterval(timerInterval);
+            document.getElementById("encryptedMessage").innerText = "";
+            document.getElementById("encryptionKey").innerText = ""; // Clear the encryption key
+            document.getElementById("decryptedInput").value = "";
+            document.getElementById("timeLeft").innerText = "120"; // Reset to 120 seconds
+        }
+
+        // Start the game when the page loads
+        startGame();
+    </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  body {
+    background-color: #f4f4f4;
+    color: #333;
+  }
+  
+  /* Header */
+  header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+  }
+  
+  header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  header h1 {
+    font-size: 24px;
+    align-items: center;
+    align-content: center;
+    display: block;
+    padding-left: 45%;
+  }
+  
+  header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+  }
+  
+  header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 15px;
+    background-color: #555;
+    border-radius: 5px;
+    align-content: center;
+    align-items: center;
+  }
+  
+  header nav ul li a:hover {
+    background-color: #999;
+  }
+  
+  /* Hero Section */
+  .hero {
+    background-image: url('depositphotos_79316698-stock-photo-business-background.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 100px 0;
+    color: black;
+    text-align: center;
+  }
+  
+  .hero h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+  
+  .hero p {
+    font-size: 18px;
+    margin-bottom: 40px;
+  }
+  
+  .hero .cta-btn {
+    background-color: #ff3c00;
+    color: #fff;
+    padding: 10px 25px;
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 5px;
+  }
+  
+  .hero .cta-btn:hover {
+    background-color: #2ef71c;
+  }
+  
+  /* Features Section */
+  .features {
+    background-color: #fff;
+    padding: 50px 0;
+    text-align: center;
+  }
+  
+  .features .container {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .features .feature-item {
+    width: 30%;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, )
+  }
